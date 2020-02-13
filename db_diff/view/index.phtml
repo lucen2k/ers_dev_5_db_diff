@@ -1,0 +1,38 @@
+<a href="<?php echo HOME_URL; ?>">Table selection to check</a>
+&nbsp;&nbsp;<a href="?section=null">Cookie clear</a>
+
+<!-- 「ページタイトル」または「項目タイトル」表示 -->
+<h3><?php echo $set->title; ?></h3>
+
+<table class="lucen">
+<tr><th>Operation MENU</th></tr>
+<tr><td><a href="?set=1">Start check (remember last data)</a>
+<br>check time =
+<?php if (isset($_COOKIE['check_time'])): ?>
+	<?php echo $_COOKIE['check_time']; ?></td></tr>
+	<tr><td><br>
+		<a href="?view=1"><font size=4>■ Difference list display (insert / update) ■</font></a><br><br>
+	</td></tr>
+	<tr><td>
+		<a href="?view=2">■ Display difference list (insert only) ■</a>
+	</td></tr>
+<?php endif; ?>
+</table>
+<br>
+
+<!-- Table自動表示 -->
+<?php if (!empty($_GET['view'])): ?>
+	<?php foreach ($set->list as $k => $v): ?>
+		<br>
+		<font size=3><b><?php echo $k; ?></b></font>
+		<?php echo $tbl->view($v); ?>
+	<?php endforeach; ?>
+<?php endif; ?>
+
+
+<br><!-- DEBUG --><hr>
+<?php //debug($set); ?>
+
+<br>
+<font size=3><b>Cookies</b></font>
+<?php echo "<pre>"; print_r($_COOKIE); echo "</pre>"; ?>

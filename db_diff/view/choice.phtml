@@ -1,0 +1,58 @@
+
+<a href="<?php echo HOME_URL; ?>check">Return to TOP</a>
+&nbsp;&nbsp;<a href="?section=null">DESELECT</a>
+<?php foreach ($set->section as $k => $v): ?>
+		&nbsp;&nbsp;<a href="?section=<?php echo $k; ?>"><?php echo $v['title']; ?></a>
+<?php endforeach; ?>
+
+<!-- Display "Page title" or "Item title" -->
+<h3><?php echo $set->title; ?></h3>
+
+-- Selected table list ---------------
+<?php
+	$check_table = array();
+	if (!empty($_COOKIE['choice_table'])) {
+		$i = 0;
+		foreach ($_COOKIE['choice_table'] as $table_name) {
+			$i++;
+			echo "<br>$i.".$table_name;
+			$check_table[$table_name] = true;
+		}
+	} else {
+		echo "<br><font color=red>No files selected</font>";
+	}
+?>
+<br>------------------------------------
+<br>※The "Select" button on the right is the same no matter which one you use.
+<br>※For tables with "last_update", update information is also displayed on the difference screen.
+
+<!-- Table automatic display -->
+<form method="post" enctype="multipart/form-data">
+<table class="lucen">
+<?php $i = 0; ?>
+<?php foreach($set->list as $table_name): ?>
+	<tr>
+		<th> <?php if (!empty($i)) echo $i; ?> </th>
+		<td>
+			<?php if (!empty($i)): ?>
+				<input type="checkbox" name="choice_table[]" value="<?php echo $table_name; ?>"<?php if (!empty($check_table[$table_name])) echo ' checked="checked"'; ?>>
+			<?php endif; ?>
+		</td>
+		<td><?php echo $table_name; ?></td>
+		<?php if ($i % 10): ?>
+			<td></td>
+		<?php else: ?>
+			<td><input type="submit" value="select"></td>
+		<?php endif; ?>
+	</tr>
+	<?php $i++; ?>
+<?php endforeach; ?>
+</table>
+</form>
+
+<br><!-- DEBUG --><hr>
+<?php //debug($set); ?>
+
+<br>
+<font size=3><b>Cookies</b></font>
+<?php echo "<pre>"; print_r($_COOKIE); echo "</pre>"; ?>
